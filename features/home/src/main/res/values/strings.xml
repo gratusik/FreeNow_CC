@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="required_for_this_app">Required for this app</string>
+    <string name="enable_now">Enable Now</string>
+    <string name="location_permission_not_granted">Location Permission not granted</string>
+    <string name="search_destination">Search destination</string>
+    <string name="enter_pick_up_location">Enter pick up location</string>
+    <string name="where_to">Where to?</string>
+    <string name="done">DONE</string>
+    <string name="confirm_ride">Confirm Ride</string>
+</resources>

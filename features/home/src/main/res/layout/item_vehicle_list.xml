@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.gratus.home.presentation.VehicleListItemViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/product_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        android:elevation="@dimen/elevation_8dp"
+        android:onClick="@{() -> viewModel.onItemClick()}"
+        app:cardBackgroundColor="?attr/app_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vertical_card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_8dp">
+
+            <ImageView
+                android:id="@+id/vehicle_image"
+                android:layout_width="@dimen/width_50dp"
+                android:layout_height="@dimen/height_50dp"
+                android:layout_margin="8dp"
+                android:contentDescription="@string/free_now_strip_image"
+                android:scaleType="fitXY"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setImage="@{viewModel.vehicleItem.fleetType}" />
+
+            <TextView
+                android:id="@+id/vehicle_text"
+                android:layout_width="@dimen/width_100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:padding="@dimen/padding_8dp"
+                android:text="@{viewModel.vehicleItem.fleetType}"
+                android:theme="@style/SubHeaderTextBlack"
+                app:layout_constraintLeft_toRightOf="@+id/vehicle_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/capacity_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16dp"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@+id/vehicle_text"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/width_20dp"
+                    android:layout_height="@dimen/height_20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:contentDescription="@string/rating"
+                    android:src="@drawable/ic_user_icon" />
+
+                <TextView
+                    android:id="@+id/capacity_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_32dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_4dp"
+                    android:text='@{viewModel.vehicleItem.capacity}'
+                    android:theme="@style/CapacityText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/vacancy_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintLeft_toRightOf="@+id/capacity_layout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setVisibility="@{viewModel.vehicleItem}"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/width_20dp"
+                    android:layout_height="@dimen/height_20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:contentDescription="@string/rating"
+                    android:src="@drawable/ic_user_outline_icon" />
+
+                <TextView
+                    android:id="@+id/vacancy_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_32dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_4dp"
+                    android:text='@{viewModel.vehicleItem.vacant}'
+                    android:theme="@style/CapacityText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/metered_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_4dp"
+                android:text='@{viewModel.vehicleItem.meter}'
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/rating_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@drawable/ratings_red_background"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@+id/vehicle_image"
+                app:layout_constraintTop_toBottomOf="@id/vehicle_text"
+                app:setLinearBackground="@{viewModel.vehicleItem.rating}">
+
+                <ImageView
+                    android:layout_width="@dimen/width_20dp"
+                    android:layout_height="@dimen/height_20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:contentDescription="@string/rating"
+                    android:src="@drawable/ic_rating_icon" />
+
+                <TextView
+                    android:id="@+id/rating_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_32dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_8dp"
+                    android:text='@{viewModel.vehicleItem.rating}'
+                    android:theme="@style/RatingText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/traffic_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@drawable/ratings_red_background"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vehicle_text"
+                app:setLinearBackgroundTraffic="@{viewModel.vehicleItem.traffic}">
+
+                <ImageView
+                    android:layout_width="@dimen/width_20dp"
+                    android:layout_height="@dimen/height_20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:contentDescription="@string/rating"
+                    android:src="@drawable/ic_traffic_icon" />
+
+                <TextView
+                    android:id="@+id/traffic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_32dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_4dp"
+                    android:text='@{viewModel.vehicleItem.traffic}'
+                    android:theme="@style/RatingText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/pick_up_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_8dp"
+                android:text='@{viewModel.vehicleItem.pickupString}'
+                android:theme="@style/CapacityText"
+                android:visibility="@{viewModel.vehicleItem.pickupVisible?  View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toRightOf="@+id/vehicle_image"
+                app:layout_constraintTop_toBottomOf="@id/rating_layout" />
+
+            <TextView
+                android:id="@+id/drop_off_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_8dp"
+                android:text='@{viewModel.vehicleItem.dropOffString}'
+                android:theme="@style/CapacityText"
+                android:visibility="@{viewModel.vehicleItem.pickupVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/traffic_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

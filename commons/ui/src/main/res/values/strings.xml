@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Free Now</string>
+    <!--Network check string-->
+    <string name="network_online" translatable="false">Back online!</string>
+    <string name="network_offline" translatable="false">No internet connection!</string>
+    <string name="connection_time_out">Failed to connect to server please check you network!</string>
+    <!--image description text-->
+    <string name="free_now_strip_image">Free now Strip Image</string>
+    <!--exception text-->
+    <string name="retry">Retry</string>
+    <string name="generic_error">Something went wrong please try again!</string>
+    <string name="direction_key">5b3ce3597851110001cf6248f9cef727f3ac47b9aa5cf445d8e6da46</string>
+
+    <string name="rating">Rating</string>
+</resources>

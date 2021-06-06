@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <include
+            android:id="@+id/places_layout"
+            layout="@layout/from_to_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/map_view_inc"
+            layout="@layout/map_view_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/places_layout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/done_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_50dp"
+            android:backgroundTint="?attr/button_background"
+            android:text="@string/done"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</layout>

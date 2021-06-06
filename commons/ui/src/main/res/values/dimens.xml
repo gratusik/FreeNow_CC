@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    height dimension used in the app-->
+    <dimen name="height_1dp">1dp</dimen>
+    <dimen name="height_16dp">16dp</dimen>
+    <dimen name="height_20dp">20dp</dimen>
+    <dimen name="height_24dp">24dp</dimen>
+    <dimen name="height_32dp">32dp</dimen>
+    <dimen name="height_50dp">50dp</dimen>
+    <dimen name="height_70dp">70dp</dimen>
+    <dimen name="height_100dp">100dp</dimen>
+    <dimen name="height_200dp">200dp</dimen>
+    <!--    width dimension used in the app-->
+    <dimen name="width_1dp">1dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="width_16p">16dp</dimen>
+    <dimen name="width_20dp">20dp</dimen>
+    <dimen name="width_24dp">24dp</dimen>
+    <dimen name="width_50dp">50dp</dimen>
+    <dimen name="width_100dp">100dp</dimen>
+    <dimen name="width_176dp">176dp</dimen>
+    <!--    margin dimension used in the app-->
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_50dp">50dp</dimen>
+    <dimen name="margin_60dp">60dp</dimen>
+    <!--    padding dimension used in the app-->
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="padding_12dp">12dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="padding_24dp">24dp</dimen>
+    <dimen name="padding_32dp">32dp</dimen>
+    <!--    text size dimension used in the app-->
+    <dimen name="text_size_small">10sp</dimen>
+    <dimen name="text_size_default">12sp</dimen>
+    <dimen name="text_size_regular">14sp</dimen>
+    <dimen name="text_size_title">16sp</dimen>
+    <dimen name="text_size_header">24sp</dimen>
+    <!--    card dimension used in the app-->
+    <dimen name="card_corner_radius">4dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="elevation_8dp">8dp</dimen>
+    <!--    icon size dimension for bottom navigation bar used in the app-->
+    <dimen name="custom_marker_image">30dp</dimen>
+    <dimen name="custom_marker_padding">4dp</dimen>
+</resources>

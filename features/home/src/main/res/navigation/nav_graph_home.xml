@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.gratus.home.presentation.FragmentHome"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_places"
+            app:destination="@id/navigation_places" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_places"
+        android:name="com.gratus.home.presentation.FragmentPlaces"
+        android:label="fragment_places"
+        tools:layout="@layout/fragment_places">
+        <action
+            android:id="@+id/action_navigation_places_to_navigation_ride"
+            app:destination="@id/navigation_ride"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_places"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_ride"
+        android:name="com.gratus.home.presentation.FragmentRide"
+        android:label="fragment_ride"
+        tools:layout="@layout/fragment_ride" />
+
+    <fragment
+        android:id="@+id/navigation_riding"
+        android:name="com.gratus.home.presentation.FragmentHome"
+        android:label="fragment_riding"
+        tools:layout="@layout/fragment_riding" />
+</navigation>

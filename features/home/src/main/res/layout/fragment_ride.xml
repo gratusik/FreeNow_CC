@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="@dimen/margin_16dp"
+            android:backgroundTint="?attr/white"
+            android:contentDescription="@string/free_now_strip_image"
+            android:src="@drawable/ic_back_icon"
+            app:fabCustomSize="@dimen/margin_50dp" />
+
+
+        <include
+            android:id="@+id/map_view_inc"
+            layout="@layout/map_view_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/point_layout" />
+
+        <LinearLayout
+            android:id="@+id/point_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/points_rv"
+                android:layout_width="match_parent"
+                android:layout_height="350dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_ride_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_50dp"
+                android:layout_marginRight="@dimen/margin_50dp"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:backgroundTint="?attr/button_background"
+                android:text="@string/confirm_ride"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Default Light theme-->
+    <color name="rating">#FFCC02</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="third_text">#D0675CC4</color>
+    <color name="button_background">#011E3E</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="app_background">#FFFFFF</color>
+    <color name="view_background">#D3D1D1</color>
+    <color name="colorPrimary">#FF0A2B</color>
+    <color name="colorPrimaryVariant">#34FF0A2B</color>
+    <color name="shadow">#5C5C5C</color>
+    <color name="ratingColorYellow">#F3D565</color>
+    <color name="ratingColorGreen">#96CEB4</color>
+    <color name="ratingColorRed">#FF6969</color>
+</resources>

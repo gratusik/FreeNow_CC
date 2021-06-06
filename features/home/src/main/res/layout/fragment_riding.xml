@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="@dimen/height_50dp"
+            android:layout_height="@dimen/width_50dp"
+            android:layout_gravity="top"
+            android:contentDescription="@string/free_now_strip_image"
+            android:padding="@dimen/padding_8dp"
+            android:src="@drawable/ic_back_icon" />
+
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ride_layout" />
+
+        <LinearLayout
+            android:id="@+id/ride_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/places_layout"
+                layout="@layout/from_to_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

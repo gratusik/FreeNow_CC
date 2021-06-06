@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    colour reference attributes for the theme the app-->
+    <attr name="rating" format="reference|color" />
+    <attr name="black" format="reference|color" />
+    <attr name="white" format="reference|color" />
+    <attr name="primary_text" format="reference|color" />
+    <attr name="secondary_text" format="reference|color" />
+    <attr name="shadow" format="reference|color" />
+    <attr name="third_text" format="reference|color" />
+    <attr name="app_background" format="reference|color" />
+    <attr name="view_background" format="reference|color" />
+    <attr name="card_background" format="reference|color" />
+    <attr name="button_background" format="reference|color" />
+    <attr name="primary_color" format="reference|color" />
+    <attr name="primary_color_variant" format="reference|color" />
+</resources>
