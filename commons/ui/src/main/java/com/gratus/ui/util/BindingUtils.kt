@@ -1,8 +1,12 @@
 package com.gratus.ui.util
 
+import android.os.Build
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
@@ -50,10 +54,13 @@ object BindingUtils {
     @JvmStatic
     @BindingAdapter("app:setImage")
     fun setImageResource(imageView: ImageView, fleetType: String) {
-        if (fleetType == TAXI) {
-            imageView.setImageResource(R.drawable.ic_taxi_icon)
-        } else {
-            imageView.setImageResource(R.drawable.ic_pooling_icon)
+        Log.d("arul","arul")
+        if (fleetType != null) {
+            if (fleetType == TAXI) {
+                imageView.setImageResource(R.drawable.ic_taxi_icon)
+            } else {
+                imageView.setImageResource(R.drawable.ic_pooling_icon)
+            }
         }
     }
 
@@ -73,18 +80,34 @@ object BindingUtils {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @JvmStatic
-    @BindingAdapter("setLinearBackgroundTraffic")
-    fun setLinearBackgroundTraffic(linearLayout: LinearLayout, traffic: String) {
+    @BindingAdapter("setTextViewColorTraffic")
+    fun setTextViewColorTraffic(textView: TextView, traffic: String) {
         when (traffic) {
             "High" -> {
-                linearLayout.setBackgroundResource(R.drawable.ratings_red_background)
+                textView.setTextColor(
+                    textView.resources.getColor(
+                        R.color.ratingColorRed,
+                        textView.resources.newTheme()
+                    )
+                )
             }
             "Moderate" -> {
-                linearLayout.setBackgroundResource(R.drawable.ratings_yellow_background)
+                textView.setTextColor(
+                    textView.resources.getColor(
+                        R.color.ratingColorYellow,
+                        textView.resources.newTheme()
+                    )
+                )
             }
             else -> {
-                linearLayout.setBackgroundResource(R.drawable.ratings_green_background)
+                textView.setTextColor(
+                    textView.resources.getColor(
+                        R.color.ratingColorGreen,
+                        textView.resources.newTheme()
+                    )
+                )
             }
         }
     }

@@ -35,11 +35,11 @@ class FragmentSignUpViewModel @Inject constructor(
                         Resource.success(insert)
                     )
                 } else {
-                    signUpLiveData.value = Resource.error("", null)
+                    signUpLiveData.postValue(Resource.error("", null))
                 }
             }
         } else {
-            signUpLiveData.value = Resource.error("", null)
+            signUpLiveData.postValue(Resource.error("", null))
         }
     }
 }

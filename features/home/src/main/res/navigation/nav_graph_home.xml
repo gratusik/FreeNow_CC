@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_places"
-            app:destination="@id/navigation_places" />
+            app:destination="@id/navigation_places"
+            app:popUpTo="@id/navigation_places"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -24,7 +26,12 @@
             android:id="@+id/action_navigation_places_to_navigation_ride"
             app:destination="@id/navigation_ride"
             app:launchSingleTop="true"
-            app:popUpTo="@id/navigation_places"
+            app:popUpTo="@id/navigation_ride"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_navigation_places_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true"/>
     </fragment>
 
@@ -32,11 +39,33 @@
         android:id="@+id/navigation_ride"
         android:name="com.gratus.home.presentation.FragmentRide"
         android:label="fragment_ride"
-        tools:layout="@layout/fragment_ride" />
+        tools:layout="@layout/fragment_ride" >
+        <action
+            android:id="@+id/action_navigation_ride_to_navigation_riding"
+            app:destination="@id/navigation_riding"
+            app:popUpTo="@id/navigation_riding"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_navigation_ride_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_riding"
-        android:name="com.gratus.home.presentation.FragmentHome"
+        android:name="com.gratus.home.presentation.FragmentRiding"
         android:label="fragment_riding"
-        tools:layout="@layout/fragment_riding" />
+        tools:layout="@layout/fragment_riding" >
+        <action
+            android:id="@+id/action_navigation_riding_to_navigation_ride"
+            app:destination="@id/navigation_ride"
+            app:popUpTo="@id/navigation_ride"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_navigation_riding_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

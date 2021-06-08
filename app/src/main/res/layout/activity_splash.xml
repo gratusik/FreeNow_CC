@@ -6,19 +6,18 @@
         android:id="@+id/parent_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/primary_color"
+        android:background="?attr/app_background"
         tools:context=".SplashActivity">
 
-        <TextView
-            android:id="@+id/title_text_splash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/logo_image"
+            android:layout_width="@dimen/width_176dp"
+            android:layout_height="@dimen/height_200dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="@string/app_name"
-            android:textColor="?attr/white"
-            android:textSize="@dimen/text_size_header"
-            android:textStyle="bold" />
+            android:scaleType="centerInside"
+            android:contentDescription="@string/free_now_strip_image"
+            android:src="@drawable/logo_splash" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

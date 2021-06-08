@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,12 +18,13 @@
             android:backgroundTint="?attr/white"
             android:contentDescription="@string/free_now_strip_image"
             android:src="@drawable/ic_back_icon"
-            app:fabCustomSize="@dimen/margin_50dp" />
+            app:fabCustomSize="@dimen/margin_50dp"
+            app:borderWidth="0dp"/>
 
 
         <include
             android:id="@+id/map_view_inc"
-            layout="@layout/map_view_item"
+            layout="@layout/item_map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/point_layout" />

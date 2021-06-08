@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="booking"
+            type="com.gratus.core.domain.remote.Poi" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/booking_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_1dp"
+        android:elevation="@dimen/elevation_8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vertical_card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/app_background"
+            android:paddingBottom="@dimen/padding_8dp">
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_4dp"
+                android:text="@string/price"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size_title"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar" />
+
+            <TextView
+                android:id="@+id/price_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_4dp"
+                android:text='@{booking.price}'
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size_title"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/price"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar" />
+
+            <LinearLayout
+                android:id="@+id/money_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price_text">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/now_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/button_background"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_8dp"
+                    android:text="@string/now_money"
+                    android:textColor="?attr/white"
+                    app:strokeColor="?attr/shadow"
+                    app:strokeWidth="@dimen/width_1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/card_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/button_background"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_8dp"
+                    android:text="@string/card"
+                    android:textColor="?attr/white"
+                    app:strokeColor="?attr/shadow"
+                    app:strokeWidth="@dimen/width_1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/money_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/button_background"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_8dp"
+                    android:text="@string/cash"
+                    android:textColor="?attr/white"
+                    app:strokeColor="?attr/shadow"
+                    app:strokeWidth="@dimen/width_1dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_bar_two"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_1dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:background="?attr/view_background"
+                app:layout_constraintTop_toBottomOf="@id/money_layout" />
+
+            <TextView
+                android:id="@+id/offer_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_8dp"
+                android:text="@string/coupon_code_for_432424"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_bar_two" />
+
+            <LinearLayout
+                android:id="@+id/offer_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/offer_Text"
+                tools:ignore="MissingConstraints,UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/width_20dp"
+                    android:layout_height="@dimen/height_20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:contentDescription="@string/rating"
+                    android:src="@drawable/ic_coupon_icon" />
+
+                <TextView
+                    android:id="@+id/promo_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_32dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_4dp"
+                    android:text="@string/coupon"
+                    android:theme="@style/RegularText" />
+
+                <EditText
+                    android:id="@+id/promo_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_32dp"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:autofillHints="@string/coupon"
+                    android:background="@drawable/edit_view_layout_bg"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_coupon_code"
+                    android:inputType="text"
+                    android:padding="@dimen/padding_4dp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_ride_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_50dp"
+                android:layout_marginRight="@dimen/margin_50dp"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:backgroundTint="?attr/button_background"
+                android:text="@string/confirm_booking"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/offer_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

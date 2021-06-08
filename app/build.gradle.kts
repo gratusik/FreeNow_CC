@@ -62,4 +62,5 @@ dependencies {
     implementation(dependency.Libs.DAGGER_ANDROID)
     kapt(dependency.AnnotationProcessorsDependencies.DAGGER_COMPILER)
     kapt(dependency.AnnotationProcessorsDependencies.DAGGER_ANDROID_COMPILER)
+    implementation ("ch.acra:acra-mail:5.1.3")
 }

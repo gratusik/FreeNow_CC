@@ -10,7 +10,7 @@
     <color name="button_background">#011E3E</color>
     <color name="card_background">#FFFFFF</color>
     <color name="app_background">#FFFFFF</color>
-    <color name="view_background">#D3D1D1</color>
+    <color name="view_background">#DDDADA</color>
     <color name="colorPrimary">#FF0A2B</color>
     <color name="colorPrimaryVariant">#34FF0A2B</color>
     <color name="shadow">#5C5C5C</color>

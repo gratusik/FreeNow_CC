@@ -6,7 +6,7 @@
     android:layout_gravity="top"
     android:layout_marginBottom="@dimen/margin_4dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/marker_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/white"
@@ -45,9 +46,31 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/marker_view"
             android:layout_width="@dimen/margin_1dp"
             android:layout_height="@dimen/height_16dp"
-            android:layout_gravity="center"
+            android:layout_below="@+id/marker_layout"
+            android:layout_centerHorizontal="true"
             android:background="?attr/black" />
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/marker_circle_image"
+            android:layout_width="@dimen/width_12p"
+            android:layout_height="@dimen/height_12dp"
+            android:layout_below="@+id/marker_view"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/free_now_strip_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_circle_marker_icon" />
+        <ImageView
+            android:id="@+id/marker_ride"
+            android:layout_width="@dimen/width_50dp"
+            android:layout_height="@dimen/height_40dp"
+            android:layout_below="@+id/marker_view"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/free_now_strip_image"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:src="@drawable/ic_circle_marker_icon" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

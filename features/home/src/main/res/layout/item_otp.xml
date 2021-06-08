@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="booking"
+            type="com.gratus.core.domain.remote.Poi" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/otp_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/otp_text"
+            android:layout_width="@dimen/width_100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_8dp"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_8dp"
+            android:text="@string/otp_4545"
+            android:theme="@style/SubHeaderTextBlack" />
+
+        <TextView
+            android:id="@+id/pick_up_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_8dp"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_8dp"
+            android:text='@{booking.pickupString}'
+            android:textAlignment="viewEnd"
+            android:theme="@style/SubHeaderTextBlack" />
+    </LinearLayout>
+</layout>

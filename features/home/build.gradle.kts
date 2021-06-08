@@ -35,4 +35,5 @@ dependencies {
     implementation("com.google.maps.android:android-maps-utils:0.5")
     kapt(dependency.AnnotationProcessorsDependencies.DAGGER_COMPILER)
     kapt(dependency.AnnotationProcessorsDependencies.DAGGER_ANDROID_COMPILER)
+    implementation ("ch.acra:acra-mail:5.1.3")
 }

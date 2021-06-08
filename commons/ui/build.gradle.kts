@@ -15,4 +15,5 @@ dependencies {
     implementation(dependency.Libs.LIFECYCLE)
     implementation(dependency.Libs.GLIDE)
     kapt(dependency.AnnotationProcessorsDependencies.GLIDE_COMPILER)
+    implementation ("ch.acra:acra-mail:5.1.3")
 }

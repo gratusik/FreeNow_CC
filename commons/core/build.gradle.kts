@@ -12,4 +12,5 @@ dependencies {
     implementation(Libs.ROOM_KTX)
     implementation(Libs.LOCAL_BROADCAST)
     kapt(dependency.AnnotationProcessorsDependencies.ROOM_COMPILER)
+    implementation ("ch.acra:acra-mail:5.1.3")
 }

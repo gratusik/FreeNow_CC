@@ -2,10 +2,7 @@ package com.gratus.home.di
 
 import com.gratus.core.di.component.CoreComponent
 import com.gratus.core.di.scopes.FeatureScope
-import com.gratus.home.presentation.FragmentHome
-import com.gratus.home.presentation.FragmentPlaces
-import com.gratus.home.presentation.FragmentRide
-import com.gratus.home.presentation.HomeActivity
+import com.gratus.home.presentation.*
 import dagger.Component
 
 @FeatureScope
@@ -21,4 +18,5 @@ interface HomeComponent {
     fun inject(fragmentHome: FragmentHome)
     fun inject(fragmentPlaces: FragmentPlaces)
     fun inject(fragmentPlaces: FragmentRide)
+    fun inject(fragmentRiding: FragmentRiding)
 }

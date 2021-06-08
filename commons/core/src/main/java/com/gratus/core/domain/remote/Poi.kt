@@ -1,6 +1,7 @@
 package com.gratus.core.domain.remote
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Poi(
     var dropOff: String,
@@ -13,10 +14,11 @@ data class Poi(
     var capacity: String,
     var vacant: String,
     var meter: String,
+    var price: String,
     var coordinate: Coordinate,
     @SerializedName("fleetType")
     var fleetType: String,
     var rating: String,
     var heading: Double,
     var id: Int
-)
+) : Serializable

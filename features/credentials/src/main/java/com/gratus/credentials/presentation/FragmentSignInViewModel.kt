@@ -31,11 +31,11 @@ class FragmentSignInViewModel @Inject constructor(
                         Resource.success(userEntity)
                     )
                 } else {
-                    userEntityLiveData.value = Resource.error("", null)
+                    userEntityLiveData.postValue(Resource.error("", null))
                 }
             }
         } else {
-            userEntityLiveData.value = Resource.error("", null)
+            userEntityLiveData.postValue(Resource.error("", null))
         }
     }
 }

@@ -11,14 +11,14 @@
 
         <include
             android:id="@+id/map_view_inc"
-            layout="@layout/map_view_item"
+            layout="@layout/item_map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_where" />
 
         <include
             android:id="@+id/bottom_where"
-            layout="@layout/bottom_where_to_item"
+            layout="@layout/item_bottom_where_to"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_100dp"
             android:layout_alignParentBottom="true" />

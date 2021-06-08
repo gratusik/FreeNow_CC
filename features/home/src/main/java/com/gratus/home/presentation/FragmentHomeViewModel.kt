@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gratus.core.domain.remote.DirectionResponse
 import com.gratus.core.domain.remote.PointListResponse
 import com.gratus.core.util.CoreConstants
+import com.gratus.core.util.CoreConstants.UIConstant.POOLING
 import com.gratus.core.util.CoreConstants.UIConstant.TAXI
 import com.gratus.core.util.network.Resource
 import com.gratus.home.interactors.GetDirectionsUseCase
@@ -86,9 +87,9 @@ class FragmentHomeViewModel @Inject constructor(
                 points.poiList[item].vacant =
                     (points.poiList[item].capacity.toInt() - Random.nextInt(0, 6)).toString()
                 if (points.poiList[item].fleetType == TAXI) {
-                    points.poiList[item].meter = "perKm 9-10€"
+                    points.poiList[item].meter = "per Km 9-10€"
                 } else {
-                    points.poiList[item].meter = "perKm 4-5€"
+                    points.poiList[item].meter = "per Km 4-5€"
                 }
             }
         } else {
@@ -105,7 +106,8 @@ class FragmentHomeViewModel @Inject constructor(
                         calendar.add(Calendar.HOUR, hours).toString()
                         calendar.add(Calendar.MINUTE, mins).toString()
                         val formatter = SimpleDateFormat("hh:mm a")
-                        points.poiList[item].dropOffString = formatter.format(calendar.time)+" dropOff"
+                        points.poiList[item].dropOffString =
+                            "DropOff: " + formatter.format(calendar.time)
                         val pickupLong: Long =
                             direction.features[0].properties.summary.duration.toLong()
                         val hoursPickUp = pickupLong.toInt() / 3600
@@ -120,6 +122,24 @@ class FragmentHomeViewModel @Inject constructor(
                             points.poiList[item].pickupString = "Pickup: $minsPickUp mins"
                         }
                         points.poiList[item].pickupVisible = true
+                        if (points.poiList[item].fleetType == TAXI) {
+                            points.poiList[item].price =
+                                (
+                                    (
+                                        points.poiList[item].distance.replace("Km", "")
+                                            .toFloat()
+                                        ) * 10
+                                    ).toString()
+                        }
+                        if (points.poiList[item].fleetType == POOLING) {
+                            points.poiList[item].price =
+                                (
+                                    (
+                                        points.poiList[item].distance.replace("Km", "")
+                                            .toFloat()
+                                        ) * 5
+                                    ).toString()
+                        }
                     } else {
                         points.poiList[item].pickupVisible = false
                     }

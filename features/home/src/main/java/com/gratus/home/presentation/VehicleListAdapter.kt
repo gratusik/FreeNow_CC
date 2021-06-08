@@ -17,8 +17,9 @@ class VehicleListAdapter @Inject constructor(private var vehicleList: ArrayList<
     private var viewModel: FragmentHomeViewModel? = null
 
     // setting listener to item click in the adapter
-    fun setListener(mListener: FragmentRide) {
+    fun setListenerViewModel(mListener: FragmentRide, mViewModel: FragmentHomeViewModel) {
         this.mListener = mListener
+        this.viewModel = mViewModel
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -27,11 +28,11 @@ class VehicleListAdapter @Inject constructor(private var vehicleList: ArrayList<
             LayoutInflater.from(parent.context),
             parent, false
         )
-        return ProductListViewHolder(itemVehicleListBinding, mListener, vehicleList, viewModel)
+        return VehicleListViewHolder(itemVehicleListBinding, mListener, vehicleList, viewModel)
     }
 
     // View Holder 
-    class ProductListViewHolder(
+    class VehicleListViewHolder(
         itemVehicleListBinding: ItemVehicleListBinding,
         private val mListener: VehicleClickListener?,
         private val vehicleList: ArrayList<Poi>,
@@ -52,7 +53,7 @@ class VehicleListAdapter @Inject constructor(private var vehicleList: ArrayList<
                         vehicleList[position],
                         mListener,
                         viewModel,
-                        holder.itemView.getContext().getResources()
+                        holder.itemView.context.resources
                             .getString(R.string.direction_key)
                     )
             }
@@ -71,16 +72,12 @@ class VehicleListAdapter @Inject constructor(private var vehicleList: ArrayList<
 
     // notify data change every time data has been added or removed
     fun updateVehicleListAdapter(updateVehicleList: ArrayList<Poi>) {
-        vehicleList.clear()
+        vehicleList = ArrayList()
         for (points in updateVehicleList) {
             if (points.vacant.toInt() > 0) {
-                vehicleList.addAll(updateVehicleList)
+                vehicleList.add(points)
             }
         }
         notifyDataSetChanged()
-    }
-
-    fun setViewModel(mViewModel: FragmentHomeViewModel) {
-        viewModel = mViewModel
     }
 }

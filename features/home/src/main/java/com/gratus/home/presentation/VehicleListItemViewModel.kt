@@ -10,6 +10,7 @@ class VehicleListItemViewModel @Inject constructor(
     private var viewModel: FragmentHomeViewModel?,
     private var key: String,
 ) {
+
     fun getVehicleItem(): Poi {
         return vehicleItem
     }

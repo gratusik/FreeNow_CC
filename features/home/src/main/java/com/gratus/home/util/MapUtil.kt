@@ -4,12 +4,20 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,6 +25,7 @@ import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
 import com.gratus.core.domain.remote.Poi
 import com.gratus.core.util.CoreConstants
+import com.gratus.core.util.CoreConstants.UIConstant.POOLING
 import com.gratus.core.util.CoreConstants.UIConstant.TAXI
 import com.gratus.home.R
 import com.gratus.home.domain.MarkerCluster
@@ -29,8 +38,8 @@ class MapUtil @Inject constructor(
     var activity: FragmentActivity,
     var mGoogleMap: GoogleMap
 ) {
-    private var mClusterMarkers: ArrayList<MarkerCluster> = ArrayList()
-    private var mClusterManager: ClusterManager<MarkerCluster>? = null
+    var mClusterMarkers: ArrayList<MarkerCluster> = ArrayList()
+    var mClusterManager: ClusterManager<MarkerCluster>? = null
     private var mapClusterRenderer: MapClusterRenderer? = null
     fun addPointsMapMarkers(
         poiList: List<Poi>
@@ -49,30 +58,33 @@ class MapUtil @Inject constructor(
         }
 
         for (points in poiList) {
-            try {
-                var markerIcon = R.drawable.ic_pooling_icon
-                if (points.fleetType == TAXI) {
-                    markerIcon = R.drawable.ic_taxi_icon
+            if (points.vacant.toInt() > 0) {
+                try {
+                    var markerIcon = R.drawable.ic_pooling_map_icon
+                    if (points.fleetType == TAXI) {
+                        markerIcon = R.drawable.ic_taxi_map_icon
+                    }
+                    var newClusterMarker =
+                        MarkerCluster()
+                    if ((points.capacity).toInt() > 0) {
+                        newClusterMarker =
+                            MarkerCluster(
+                                LatLng(points.coordinate.latitude, points.coordinate.longitude),
+                                points.rating, points.fleetType, markerIcon, points
+                            )
+                    }
+                    if (!mClusterMarkers.contains(points)) {
+                        mClusterManager!!.addItem(newClusterMarker)
+                        mClusterMarkers.add(newClusterMarker)
+                    }
+                } catch (e: NullPointerException) {
+                    Log.e(ContentValues.TAG, "marker" + e.message)
                 }
-                var newClusterMarker =
-                    MarkerCluster()
-                if ((points.capacity).toInt() > 0) {
-                    newClusterMarker =
-                        MarkerCluster(
-                            LatLng(points.coordinate.latitude, points.coordinate.longitude),
-                            points.rating, points.fleetType, markerIcon, points
-                        )
-                }
-                if (!mClusterMarkers.contains(points)) {
-                    mClusterManager!!.addItem(newClusterMarker)
-                    mClusterMarkers.add(newClusterMarker)
-                }
-            } catch (e: NullPointerException) {
-                Log.e(ContentValues.TAG, "marker" + e.message)
+                mClusterManager!!.cluster()
+                mGoogleMap.setInfoWindowAdapter(CustomInfoWindow(mContext!!))
             }
-            mClusterManager!!.cluster()
-            mGoogleMap.setInfoWindowAdapter(CustomInfoWindow(mContext!!))
         }
+
         val mLocation = LatLng(
             poiList[poiList.size - 1].coordinate.latitude,
             poiList[poiList.size - 1].coordinate.longitude
@@ -112,22 +124,67 @@ class MapUtil @Inject constructor(
     fun addTripMarker(
         latLng: LatLng,
         snippet: String,
+        title: String,
+        riding: Boolean = false,
     ): Marker? {
         mGoogleMap.isBuildingsEnabled = false
         val markerOptions = MarkerOptions()
         // Setting the position for the marker
         markerOptions.position(latLng)
-        // Setting the title for the marker.
-        // This will be displayed on taping the marker
         markerOptions.snippet(snippet)
-        if (snippet == "PickUp point") {
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_circle_marker_icon))
-        } else {
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_dst_marker_icon))
+        markerOptions.title(title)
+        when (snippet) {
+            "PickUp point" -> {
+                markerOptions.icon(
+                    BitmapDescriptorFactory.fromBitmap(
+                        createCustomMarker(
+                            snippet,
+                            title
+                        )
+                    )
+                )
+            }
+            "Destination" -> {
+                markerOptions.icon(
+                    BitmapDescriptorFactory.fromBitmap(
+                        createCustomMarker(
+                            snippet,
+                            title
+                        )
+                    )
+                )
+            }
+            TAXI -> {
+                if (riding) {
+                    markerOptions.icon(
+                        BitmapDescriptorFactory.fromBitmap(
+                            createCustomMarker(
+                                snippet,
+                                title
+                            )
+                        )
+                    )
+                } else {
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.mark))
+                    setOnClickCameraView(latLng, mGoogleMap.addMarker(markerOptions))
+                }
+            }
+            else -> {
+                if (riding) {
+                    markerOptions.icon(
+                        BitmapDescriptorFactory.fromBitmap(
+                            createCustomMarker(
+                                snippet,
+                                title
+                            )
+                        )
+                    )
+                } else {
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.mark))
+                    setOnClickCameraView(latLng, mGoogleMap.addMarker(markerOptions))
+                }
+            }
         }
-        // Animating to the touched position
-        // Placing a marker on the touched position
-        mGoogleMap.setInfoWindowAdapter(CustomInfoWindow(mContext!!))
         return mGoogleMap.addMarker(markerOptions)
     }
 
@@ -138,12 +195,12 @@ class MapUtil @Inject constructor(
         var latLong: LatLng? = latLng
         if (mTripMarkers != null) {
             latLong = LatLng(
-                mTripMarkers[1].position.latitude,
-                mTripMarkers[1].position.longitude
+                mTripMarkers[mTripMarkers.size - 1].position.latitude,
+                mTripMarkers[mTripMarkers.size - 1].position.longitude
             )
-            mTripMarkers[1].showInfoWindow()
+            mTripMarkers[mTripMarkers.size - 1].showInfoWindow()
         }
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong!!, 9.0f))
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong!!, 9.1f))
     }
 
     fun removeTripMarkers(mTripMarkers: ArrayList<Marker>) {
@@ -152,14 +209,18 @@ class MapUtil @Inject constructor(
         }
     }
 
-    fun getAddress(mContext: Context, mLatLngPick: LatLng): String {
+    fun getAddress(mContext: Context, mLatLngPick: LatLng): String? {
         val geocoder = Geocoder(mContext, Locale.ENGLISH)
         val addressList: MutableList<Address> =
             geocoder.getFromLocation(mLatLngPick.latitude, mLatLngPick.longitude, 1)
-        return addressList[0].getAddressLine(0)
+        return if (addressList.size > 0) {
+            addressList[0].getAddressLine(0)
+        } else {
+            null
+        }
     }
 
-    fun tripPolyline(
+    fun drawPolyline(
         coordinates: List<List<Double>>
     ): Polyline {
         val newDecodedPath: ArrayList<LatLng> = ArrayList()
@@ -177,9 +238,64 @@ class MapUtil @Inject constructor(
         return polyline
     }
 
+    fun tripPolyline(
+        polyline: ArrayList<Polyline>
+    ) {
+        for (line in polyline) {
+            mGoogleMap.addPolyline(PolylineOptions().addAll(line.points).color(line.color))
+        }
+    }
+
     fun removeTripPolyline(polyline: ArrayList<Polyline>) {
         for (line in polyline) {
             line.remove()
         }
+    }
+
+    private fun setOnClickCameraView(latLng: LatLng, marker: Marker) {
+        marker.showInfoWindow()
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+    }
+
+    private fun createCustomMarker(snippet: String?, title: String): Bitmap {
+        val marker: View =
+            (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+                R.layout.custom_marker,
+                null
+            )
+        val snippetTv = marker.findViewById<View>(R.id.snippet_Tv) as TextView
+        snippetTv.text = snippet
+        val ratingTv = marker.findViewById<View>(R.id.rating_tv) as TextView
+        val markerRide = marker.findViewById<View>(R.id.marker_ride) as ImageView
+        val markerCircle = marker.findViewById<View>(R.id.marker_circle_image) as ImageView
+        when (snippet) {
+            TAXI -> {
+                markerRide.isVisible = true
+                markerCircle.isVisible = false
+                markerRide.setImageResource(R.drawable.ic_taxi_map_icon)
+                ratingTv.text = title
+            }
+            POOLING -> {
+                markerRide.isVisible = true
+                markerCircle.isVisible = false
+                markerRide.setImageResource(R.drawable.ic_pooling_map_icon)
+                ratingTv.text = title
+            }
+            else -> {
+                markerRide.isVisible = false
+                markerCircle.isVisible = true
+            }
+        }
+        marker.layoutParams = ViewGroup.LayoutParams(52, ViewGroup.LayoutParams.WRAP_CONTENT)
+        marker.measure(marker.measuredWidth, marker.measuredHeight)
+        marker.layout(0, 0, marker.measuredWidth, marker.measuredHeight)
+        val bitmap = Bitmap.createBitmap(
+            marker.measuredWidth,
+            marker.measuredHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        marker.draw(canvas)
+        return bitmap
     }
 }

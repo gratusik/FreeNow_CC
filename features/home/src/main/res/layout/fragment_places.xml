@@ -9,13 +9,13 @@
 
         <include
             android:id="@+id/places_layout"
-            layout="@layout/from_to_item"
+            layout="@layout/item_from_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/map_view_inc"
-            layout="@layout/map_view_item"
+            layout="@layout/item_map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/places_layout" />

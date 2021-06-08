@@ -36,7 +36,7 @@ class MapClusterRenderer(
     override fun onBeforeClusterItemRendered(item: MarkerCluster, markerOptions: MarkerOptions) {
         imageView.setImageResource(item.getIconPicture())
         val icon = iconGenerator.makeIcon()
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getTitle())
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.title)
         if (item.getPoi() != null) {
             markerOptions.rotation(item.getPoi()!!.heading.toFloat())
         }

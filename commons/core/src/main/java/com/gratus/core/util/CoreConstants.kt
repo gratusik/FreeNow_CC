@@ -35,5 +35,7 @@ object CoreConstants {
         const val TAXI = "TAXI"
         val traffic = arrayOf("Low", "Moderate", "High")
         const val POOLING = "POOLING"
+        const val SELECTED = "SELECTED"
+        const val POLYLINE = "POLYLINE"
     }
 }

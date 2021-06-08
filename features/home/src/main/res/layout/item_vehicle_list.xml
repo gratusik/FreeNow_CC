@@ -13,25 +13,25 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/product_card"
+        android:id="@+id/vehicle_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_8dp"
+        android:layout_marginBottom="@dimen/margin_1dp"
         android:elevation="@dimen/elevation_8dp"
-        android:onClick="@{() -> viewModel.onItemClick()}"
-        app:cardBackgroundColor="?attr/app_background">
+        android:onClick="@{() -> viewModel.onItemClick()}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/vertical_card_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_8dp">
+            android:background="@{viewModel.vehicleItem.pickupVisible?@color/view_background  :@color/card_background}"
+            android:paddingBottom="@dimen/padding_8dp">
 
             <ImageView
                 android:id="@+id/vehicle_image"
                 android:layout_width="@dimen/width_50dp"
                 android:layout_height="@dimen/height_50dp"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/margin_8dp"
                 android:contentDescription="@string/free_now_strip_image"
                 android:scaleType="fitXY"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -137,13 +137,13 @@
                 android:layout_marginRight="@dimen/margin_8dp"
                 android:background="@drawable/ratings_red_background"
                 android:orientation="horizontal"
-                app:layout_constraintLeft_toRightOf="@+id/vehicle_image"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vehicle_text"
                 app:setLinearBackground="@{viewModel.vehicleItem.rating}">
 
                 <ImageView
-                    android:layout_width="@dimen/width_20dp"
-                    android:layout_height="@dimen/height_20dp"
+                    android:layout_width="@dimen/width_16p"
+                    android:layout_height="@dimen/height_16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_8dp"
                     android:layout_marginEnd="@dimen/margin_4dp"
@@ -168,11 +168,9 @@
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/margin_16dp"
                 android:layout_marginRight="@dimen/margin_8dp"
-                android:background="@drawable/ratings_red_background"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vehicle_text"
-                app:setLinearBackgroundTraffic="@{viewModel.vehicleItem.traffic}">
+                app:layout_constraintLeft_toRightOf="@+id/vehicle_image"
+                app:layout_constraintTop_toBottomOf="@id/vehicle_text">
 
                 <ImageView
                     android:layout_width="@dimen/width_20dp"
@@ -191,7 +189,8 @@
                     android:gravity="center_vertical"
                     android:padding="@dimen/padding_4dp"
                     android:text='@{viewModel.vehicleItem.traffic}'
-                    android:theme="@style/RatingText" />
+                    android:theme="@style/RatingText"
+                    app:setTextViewColorTraffic="@{viewModel.vehicleItem.traffic}"/>
             </LinearLayout>
 
             <TextView
@@ -204,7 +203,7 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/padding_8dp"
                 android:text='@{viewModel.vehicleItem.pickupString}'
-                android:theme="@style/CapacityText"
+                android:theme="@style/SubHeaderTextBlack"
                 android:visibility="@{viewModel.vehicleItem.pickupVisible?  View.VISIBLE : View.GONE}"
                 app:layout_constraintLeft_toRightOf="@+id/vehicle_image"
                 app:layout_constraintTop_toBottomOf="@id/rating_layout" />
@@ -214,11 +213,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16dp"
-                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
                 android:gravity="center_vertical"
                 android:padding="@dimen/padding_8dp"
                 android:text='@{viewModel.vehicleItem.dropOffString}'
-                android:theme="@style/CapacityText"
+                android:theme="@style/SubHeaderTextBlack"
                 android:visibility="@{viewModel.vehicleItem.pickupVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/traffic_layout" />

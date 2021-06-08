@@ -30,4 +30,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     kapt(dependency.AnnotationProcessorsDependencies.DAGGER_COMPILER)
     kapt(dependency.AnnotationProcessorsDependencies.DAGGER_ANDROID_COMPILER)
+    implementation ("ch.acra:acra-mail:5.1.3")
 }

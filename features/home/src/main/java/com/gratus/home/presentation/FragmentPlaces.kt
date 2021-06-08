@@ -51,7 +51,10 @@ class FragmentPlaces :
             }
         }
         binding.placesLayout.backImg.setOnClickListener {
-            view?.let { it1 -> Navigation.findNavController(it1).popBackStack() }
+            view?.let { view ->
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_navigation_places_to_navigation_home)
+            }
         }
     }
 
@@ -71,12 +74,10 @@ class FragmentPlaces :
     private fun setPickUpDst() {
         var mLatLng = LatLng(P1LAT, P1LONG)
         binding.placesLayout.fromEt.setText(mapUtil.getAddress(mContext!!, mLatLng))
-        mTripMarkers.add(mapUtil.addTripMarker(mLatLng, "PickUp point")!!)
+        mTripMarkers.add(mapUtil.addTripMarker(mLatLng, "PickUp point", "")!!)
         mLatLng = LatLng(P2LAT, P2LONG)
         binding.placesLayout.toEt.setText(mapUtil.getAddress(mContext!!, mLatLng))
-        val marker = mapUtil.addTripMarker(mLatLng, "Destination")
-        marker!!.showInfoWindow()
-        mTripMarkers.add(marker)
+        mTripMarkers.add(mapUtil.addTripMarker(mLatLng, "Destination", "")!!)
         mapUtil.setTripCameraView(mTripMarkers, null)
     }
 

@@ -9,4 +9,14 @@
     <string name="where_to">Where to?</string>
     <string name="done">DONE</string>
     <string name="confirm_ride">Confirm Ride</string>
+    <string name="coupon">Coupon</string>
+    <string name="now_money">Now Money €100</string>
+    <string name="card">Card</string>
+    <string name="cash">Cash</string>
+    <string name="enter_coupon_code">Enter coupon code</string>
+    <string name="confirm_booking">Confirm Booking</string>
+    <string name="coupon_code_for_432424">Coupon code for 432424</string>
+    <string name="price">Price: €</string>
+    <string name="otp_4545">OTP: 4545</string>
+    <string name="cancel_booking">Cancel Booking</string>
 </resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="booking"
+            type="com.gratus.core.domain.remote.Poi" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/final_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+        <View
+            android:id="@+id/view_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_1dp"
+            android:background="?attr/view_background"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_8dp"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_8dp"
+            android:text="@string/cancel_booking" />
+
+        <TextView
+            android:id="@+id/ride_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_8dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_8dp"
+            android:visibility="gone"
+            android:theme="@style/SubHeaderTextBlack" />
+    </LinearLayout>
+</layout>

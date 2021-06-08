@@ -2,12 +2,14 @@ package com.gratus.home.presentation
 
 import android.content.Context
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -20,6 +22,8 @@ import com.gratus.core.util.CoreConstants.RemoteConstant.P1LAT
 import com.gratus.core.util.CoreConstants.RemoteConstant.P1LONG
 import com.gratus.core.util.CoreConstants.RemoteConstant.P2LAT
 import com.gratus.core.util.CoreConstants.RemoteConstant.P2LONG
+import com.gratus.core.util.CoreConstants.UIConstant.POLYLINE
+import com.gratus.core.util.CoreConstants.UIConstant.SELECTED
 import com.gratus.core.util.network.ResourceState
 import com.gratus.home.R
 import com.gratus.home.databinding.FragmentRideBinding
@@ -39,6 +43,8 @@ class FragmentRide :
     private val mTripMarkers: ArrayList<Marker> = ArrayList()
     private var polyline: ArrayList<Polyline> = ArrayList()
     private lateinit var mapUtil: MapUtil
+    private var scroll: Boolean = false
+    private var selectedVehicle: Poi? = null
 
     @Inject
     lateinit var vehicleListAdapter: VehicleListAdapter
@@ -64,9 +70,21 @@ class FragmentRide :
             observeOnVehiclePoints()
         }
         binding.backImg.setOnClickListener {
-            view?.let { it1 -> Navigation.findNavController(it1).popBackStack() }
+            view?.let { view ->
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_navigation_ride_to_navigation_home)
+            }
         }
         setVehicleListAdapter()
+        binding.confirmRideBt.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable(SELECTED, selectedVehicle)
+            bundle.putSerializable(POLYLINE, polyline)
+            view?.let { view ->
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_navigation_ride_to_navigation_riding, bundle)
+            }
+        }
     }
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
@@ -79,16 +97,32 @@ class FragmentRide :
         mapUtil.mapReady()
         mapUtil.removeTripMarkers(mTripMarkers)
         setPickUpDst()
-        mapUtil.removeTripPolyline(polyline)
+        map.setOnMarkerClickListener(
+            OnMarkerClickListener { marker ->
+                for (i in viewModel.vehiclePointsFlowState.value.data!!.poiList) {
+                    if (i.coordinate.latitude == marker.position.latitude &&
+                        i.coordinate.longitude == marker.position.longitude
+                    ) {
+                        viewModel.getDirections(
+                            resources.getString(R.string.direction_key),
+                            "$P1LONG,$P1LAT",
+                            "${marker.position.longitude},${marker.position.latitude}",
+                            true,
+                            i.id
+                        )
+                        scroll = true
+                    }
+                }
+                true
+            }
+        )
     }
 
     private fun setPickUpDst() {
         var mLatLng = LatLng(P1LAT, P1LONG)
-        mTripMarkers.add(mapUtil.addTripMarker(mLatLng, "PickUp point")!!)
+        mTripMarkers.add(mapUtil.addTripMarker(mLatLng, "PickUp point", "")!!)
         mLatLng = LatLng(P2LAT, P2LONG)
-        val marker = mapUtil.addTripMarker(mLatLng, "Destination")
-        marker!!.showInfoWindow()
-        mTripMarkers.add(marker)
+        mTripMarkers.add(mapUtil.addTripMarker(mLatLng, "Destination", "")!!)
         mapUtil.setTripCameraView(mTripMarkers, null)
     }
 
@@ -99,8 +133,7 @@ class FragmentRide :
         binding.pointsRv.layoutManager = linearLayoutManager
         binding.pointsRv.itemAnimator = DefaultItemAnimator()
         binding.pointsRv.adapter = vehicleListAdapter
-        vehicleListAdapter.setListener(FragmentRide())
-        vehicleListAdapter.setViewModel(viewModel)
+        vehicleListAdapter.setListenerViewModel(FragmentRide(), viewModel)
     }
 
     private fun observeOnVehiclePoints() {
@@ -135,21 +168,52 @@ class FragmentRide :
     }
 
     private fun observeOnDirection() {
+        var pos = 0
         viewModel.directionsFlowState.asLiveData().observe(this) {
             when (it.status) {
                 ResourceState.LOADING -> {
                 }
                 ResourceState.SUCCESS -> {
-                    if (polyline.size > 2) {
-                        polyline[2].remove()
-                        polyline.removeAt(2)
+
+                    if (polyline.size - 1 == 1) {
+                        polyline[polyline.size - 1].remove()
+                        polyline.removeAt(polyline.size - 1)
                     }
-                    polyline.add(
-                        mapUtil.tripPolyline(
-                            it.data?.features?.get(0)?.geometry?.coordinates!!
+                    if (mTripMarkers.size - 1 == 2) {
+                        mTripMarkers[mTripMarkers.size - 1].remove()
+                        mTripMarkers.removeAt(mTripMarkers.size - 1)
+                    }
+                    for ((index, value) in viewModel.vehiclePointsFlowState.value.data!!.poiList.withIndex()) {
+                        if (value.pickupVisible) {
+                            pos = index
+                            mTripMarkers.add(
+                                mapUtil.addTripMarker(
+                                    LatLng(
+                                        value.coordinate.latitude,
+                                        value.coordinate.longitude
+                                    ),
+                                    value.fleetType,
+                                    value.rating
+                                )!!
+                            )
+                            selectedVehicle = value
+                            binding.confirmRideBt.isVisible = true
+                        }
+                    }
+                    if (polyline.size <= 1) {
+                        polyline.add(
+                            mapUtil.drawPolyline(
+                                it.data?.features?.get(0)?.geometry?.coordinates!!
+                            )
                         )
-                    )
+                    }
                     vehicleListAdapter.updateVehicleListAdapter(viewModel.vehiclePointsFlowState.value.data!!.poiList)
+                    binding.pointsRv.post {
+                        if (scroll) {
+                            binding.pointsRv.smoothScrollToPosition(pos)
+                            scroll = false
+                        }
+                    }
                 }
                 ResourceState.ERROR -> {
                     DynamicToast.makeError(
@@ -198,7 +262,11 @@ class FragmentRide :
         mContext = null
     }
 
-    override fun onItemClick(vehicleItem: Poi, viewModel: FragmentHomeViewModel?, key: String) {
+    override fun onItemClick(
+        vehicleItem: Poi,
+        viewModel: FragmentHomeViewModel?,
+        key: String
+    ) {
         viewModel!!.getDirections(
             key,
             "$P1LONG,$P1LAT",
@@ -206,9 +274,5 @@ class FragmentRide :
             true,
             vehicleItem.id
         )
-//        val marker = mapUtil.addTripMarker(mLatLng, "Destination")
-//        marker!!.showInfoWindow()
-//        mapUtil.removeTripMarkers(mTripMarkers)
-//        mTripMarkers.add(marker)
     }
 }
